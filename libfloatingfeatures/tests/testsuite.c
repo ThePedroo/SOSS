@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "floating_feature.h"
+#include "cpp_strings.h"
 
 #ifndef FLOATING_FEATURE_XML_PATH
   #define FLOATING_FEATURE_XML_PATH "/vendor/etc/floating_feature.xml"
@@ -27,6 +28,26 @@ static int test_check(int condition, const char *expression) {
 }
 
 #define CHECK(condition) (test_failures += test_check((condition) != 0, #condition))
+
+/* INFO: The SemFloatingFeature C++ class is exported under its original
+         mangled names, so the C++ API is exercised from C directly. */
+void *_ZN18SemFloatingFeature11getInstanceEv(void);
+int _ZN18SemFloatingFeature12_loadFeatureEv(void *self);
+
+int _ZN18SemFloatingFeature15getEnableStatusEPKc(void *self, const char *feature_name);
+int _ZN18SemFloatingFeature15getEnableStatusEPKcb(void *self, const char *feature_name, int default_value);
+int _ZN18SemFloatingFeature10getIntegerEPKc(void *self, const char *feature_name);
+int _ZN18SemFloatingFeature10getIntegerEPKci(void *self, const char *feature_name, int default_value);
+struct std_string _ZN18SemFloatingFeature9getStringEPKc(void *self, const char *feature_name);
+struct std_string _ZN18SemFloatingFeature9getStringEPKcPc(void *self, const char *feature_name, char *default_value);
+
+/* INFO: Compare a std::string to the expected C string. */
+static int check_std_string(const struct std_string *string, const char *expected) {
+  const char *data = read_std_string(string);
+
+  return data != NULL && strcmp(data, expected) == 0 &&
+         get_std_string_length(string) == strlen(expected);
+}
 
 #ifndef NO_LOAD_TEST
 static int write_test_xml(void) {
@@ -116,6 +137,41 @@ static void run_loaded_checks(void) {
   }
   CHECK(all_a != 0);
 }
+
+static void run_loaded_cpp_checks(void) {
+  void *instance = _ZN18SemFloatingFeature11getInstanceEv();
+
+  if (instance == NULL) {
+    CHECK(instance != NULL);
+
+    return;
+  }
+
+  /* INFO: With the loaded feature file, _loadFeature reports success */
+  CHECK(_ZN18SemFloatingFeature12_loadFeatureEv(instance) == 1);
+
+  CHECK(_ZN18SemFloatingFeature15getEnableStatusEPKc(instance, "SEC_FLOATING_FEATURE_BOOL_TRUE") == 1);
+  CHECK(_ZN18SemFloatingFeature15getEnableStatusEPKc(instance, "SEC_FLOATING_FEATURE_BOOL_OFF") == 0);
+  CHECK(_ZN18SemFloatingFeature15getEnableStatusEPKcb(instance, "SEC_FLOATING_FEATURE_MISSING", 1) == 1);
+  CHECK(_ZN18SemFloatingFeature15getEnableStatusEPKcb(instance, "SEC_FLOATING_FEATURE_BOOL_TRUE", 0) == 1);
+
+  CHECK(_ZN18SemFloatingFeature10getIntegerEPKc(instance, "SEC_FLOATING_FEATURE_INT") == 42);
+  CHECK(_ZN18SemFloatingFeature10getIntegerEPKc(instance, "SEC_FLOATING_FEATURE_INT_NEG") == -7);
+  CHECK(_ZN18SemFloatingFeature10getIntegerEPKc(instance, "SEC_FLOATING_FEATURE_MISSING") == -1);
+  CHECK(_ZN18SemFloatingFeature10getIntegerEPKci(instance, "SEC_FLOATING_FEATURE_MISSING", 7) == 7);
+
+  struct std_string str = _ZN18SemFloatingFeature9getStringEPKc(instance, "SEC_FLOATING_FEATURE_STRING");
+  CHECK(check_std_string(&str, "hello_world") != 0);
+
+  str = _ZN18SemFloatingFeature9getStringEPKc(instance, "SEC_FLOATING_FEATURE_MISSING");
+  CHECK(check_std_string(&str, "TRUE") != 0);
+
+  str = _ZN18SemFloatingFeature9getStringEPKcPc(instance, "SEC_FLOATING_FEATURE_MISSING", "fallback");
+  CHECK(check_std_string(&str, "fallback") != 0);
+
+  str = _ZN18SemFloatingFeature9getStringEPKcPc(instance, "SEC_FLOATING_FEATURE_STRING", "fallback");
+  CHECK(check_std_string(&str, "hello_world") != 0);
+}
 #endif
 
 #ifdef NO_LOAD_TEST
@@ -127,6 +183,27 @@ static void run_loaded_checks(void) {
     CHECK(strcmp(FloatingFeature_getString("ANY_FEATURE"), "TRUE") == 0);
     CHECK(strcmp(FloatingFeature_getStringWithDefault("ANY_FEATURE", "fallback"), "fallback") == 0);
   }
+
+  static void run_noload_cpp_checks(void) {
+    void *instance = _ZN18SemFloatingFeature11getInstanceEv();
+
+    if (instance == NULL) {
+      CHECK(instance != NULL);
+
+      return;
+    }
+
+    /* INFO: With no feature file, _loadFeature honestly reports failure */
+    CHECK(_ZN18SemFloatingFeature12_loadFeatureEv(instance) == 0);
+
+    CHECK(_ZN18SemFloatingFeature15getEnableStatusEPKc(instance, "ANY_FEATURE") == 0);
+    CHECK(_ZN18SemFloatingFeature15getEnableStatusEPKcb(instance, "ANY_FEATURE", 1) == 1);
+    CHECK(_ZN18SemFloatingFeature10getIntegerEPKc(instance, "ANY_FEATURE") == -1);
+    CHECK(_ZN18SemFloatingFeature10getIntegerEPKci(instance, "ANY_FEATURE", 5) == 5);
+
+    struct std_string str = _ZN18SemFloatingFeature9getStringEPKc(instance, "ANY_FEATURE");
+    CHECK(check_std_string(&str, "TRUE") != 0);
+  }
 #endif
 
 int main(void) {
@@ -137,8 +214,10 @@ int main(void) {
       return 1;
     }
     run_loaded_checks();
+    run_loaded_cpp_checks();
   #else
     run_noload_checks();
+    run_noload_cpp_checks();
   #endif
 
   if (test_failures == 0) {

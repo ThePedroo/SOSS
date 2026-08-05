@@ -12,7 +12,9 @@ all:
 	@mkdir -p build
 	$(CC) $(CFLAGS) -shared -Wl,-soname,libexpat.so -o build/libexpat_stub.so stub/expat_stub.c
 	$(CC) $(CFLAGS) -c floating_feature.c -o build/floating_feature.o
-	$(CC) $(LDFLAGS) -shared build/floating_feature.o -o libfloatingfeature.so -Lbuild -lexpat_stub
+	$(CC) $(CFLAGS) -c cpp_strings.c -o build/cpp_strings.o
+	$(CC) $(CFLAGS) -c sem_floating_feature.c -o build/sem_floating_feature.o
+	$(CC) $(LDFLAGS) -shared build/floating_feature.o build/cpp_strings.o build/sem_floating_feature.o -o libfloatingfeature.so -Lbuild -lexpat_stub
 
 test: all
 	$(CC) $(CFLAGS) -fPIE -pie tests/testsuite.c -L. -lfloatingfeature -o build/test

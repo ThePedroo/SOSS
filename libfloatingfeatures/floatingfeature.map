@@ -6,6 +6,18 @@
     FloatingFeature_getIntegerWithDefault;
     FloatingFeature_getString;
     FloatingFeature_getStringWithDefault;
+    _ZN18SemFloatingFeature10getIntegerEPKc;
+    _ZN18SemFloatingFeature10getIntegerEPKci;
+    _ZN18SemFloatingFeature11getInstanceEv;
+    _ZN18SemFloatingFeature12_loadFeatureEv;
+    _ZN18SemFloatingFeature15getEnableStatusEPKc;
+    _ZN18SemFloatingFeature15getEnableStatusEPKcb;
+    _ZN18SemFloatingFeature9getStringEPKc;
+    _ZN18SemFloatingFeature9getStringEPKcPc;
+    _ZN18SemFloatingFeatureC1Ev;
+    _ZN18SemFloatingFeatureC2Ev;
+    _ZN18SemFloatingFeatureD1Ev;
+    _ZN18SemFloatingFeatureD2Ev;
   local:
     *;
 };

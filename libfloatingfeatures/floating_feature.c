@@ -228,6 +228,12 @@ static struct floatingfeature_state *floatingfeature_get_instance(void) {
   return &floatingfeature_instance;
 }
 
+int floatingfeature_is_loaded(void) {
+  struct floatingfeature_state *state = floatingfeature_get_instance();
+
+  return state->loaded;
+}
+
 static int floatingfeature_get_enable_status(struct floatingfeature_state *state, const char *feature_name, int default_value) {
   if (!state->loaded) return default_value;
 

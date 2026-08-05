@@ -11,9 +11,12 @@
 
 !.gitignore
 !Android.bp
+!cpp_strings.c
+!cpp_strings.h
 !expat.h
 !floating_feature.c
 !floating_feature.h
 !floatingfeature.map
 !Makefile
 !README.md
+!sem_floating_feature.c

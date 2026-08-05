@@ -13,4 +13,7 @@ char *FloatingFeature_getString(const char *featureName);
 
 char *FloatingFeature_getStringWithDefault(const char *featureName, const char *defaultValue);
 
+/* INFO: Internal helper (hidden by the version script) */
+int floatingfeature_is_loaded(void);
+
 #endif /* FLOATING_FEATURE_H */

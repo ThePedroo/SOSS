@@ -1,6 +1,10 @@
 cc_library_shared {
     name: "libfloatingfeature",
-    srcs: ["floating_feature.c"],
+    srcs: [
+        "floating_feature.c",
+        "cpp_strings.c",
+        "sem_floating_feature.c",
+    ],
     cflags: [
         "-std=c99",
         "-Wall",
