@@ -13,7 +13,7 @@ This is a repository containing reimplementation of Samsung binaries and librari
 
 ## Reimplementations
 
-- GateKeeper HAL (HIDL): [Samsung GateKeeper HAL](/gatekeeper/) for v1 and v2 devices. (SOON)
+- GateKeeper HAL (HIDL): [Samsung GateKeeper HAL](/gatekeeper/) for v1 and v2 devices.
 
 ## Contribution
 
@@ -26,4 +26,3 @@ None yet, but we are looking forward to see your project here.
 ## License
 
 SOSS is licensed under [Apache 2.0 License](LICENSE). You can read more about it on [Open Source Initiative](https://opensource.org/licenses/Apache-2.0).
-

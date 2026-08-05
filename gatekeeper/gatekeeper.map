@@ -1,0 +1,9 @@
+{
+  global:
+    HMI;
+    shmem_sz_cmd;
+    shmem_sz_pwd;
+    shmem_sz_pwd_handle;
+  local:
+    *;
+};

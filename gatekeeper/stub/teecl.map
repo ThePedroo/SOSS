@@ -1,0 +1,13 @@
+TEEGRIS_1 {
+  global:
+    TEEC_InitializeContext;
+    TEEC_FinalizeContext;
+    TEECS_OpenSession;
+    TEEC_CloseSession;
+    TEEC_AllocateSharedMemory;
+    TEEC_ReleaseSharedMemory;
+    TEEC_InvokeCommand;
+    get_error_text;
+  local:
+    *;
+};

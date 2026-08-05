@@ -1,0 +1,12 @@
+*
+
+!stub/
+!stub/**
+
+!.gitignore
+!Android.bp
+!gatekeeper.c
+!gatekeeper.h
+!gatekeeper.map
+!Makefile
+!README.md

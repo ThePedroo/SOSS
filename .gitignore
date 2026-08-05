@@ -1,0 +1,8 @@
+*
+
+!gatekeeper/
+!gatekeeper/**
+
+!.gitignore
+!LICENSE
+!README.md
