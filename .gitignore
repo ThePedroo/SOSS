@@ -3,6 +3,9 @@
 !gatekeeper/
 !gatekeeper/**
 
+!libfloatingfeatures/
+!libfloatingfeatures/**
+
 !.gitignore
 !LICENSE
 !README.md

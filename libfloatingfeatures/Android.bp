@@ -1,0 +1,20 @@
+cc_library_shared {
+    name: "libfloatingfeature",
+    srcs: ["floating_feature.c"],
+    cflags: [
+        "-std=c99",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic",
+    ],
+    shared_libs: ["libexpat"],
+    version_script: "floatingfeature.map",
+    vendor: true
+}
+
+/* INFO: Link-time stub for the system libexpat */
+cc_library_shared {
+    name: "libexpat",
+    srcs: ["stub/expat_stub.c"],
+    vendor: true
+}

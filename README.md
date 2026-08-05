@@ -9,11 +9,13 @@ This is a repository containing reimplementation of Samsung binaries and librari
 
 ## Dependencies
 
-- N/A (soon for other blobs)
+- `libexpat.so`, required by:
+  - Floating Features Library
 
 ## Reimplementations
 
 - GateKeeper HAL (HIDL): [Samsung GateKeeper HAL](/gatekeeper/) for v1 and v2 devices.
+- Floating Features Library: [libfloatingfeatures.so](/libfloatingfeatures/)
 
 ## Contribution
 

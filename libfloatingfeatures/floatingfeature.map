@@ -1,0 +1,11 @@
+{
+  global:
+    FloatingFeature_getEnableStatus;
+    FloatingFeature_getEnableStatusWithDefault;
+    FloatingFeature_getInteger;
+    FloatingFeature_getIntegerWithDefault;
+    FloatingFeature_getString;
+    FloatingFeature_getStringWithDefault;
+  local:
+    *;
+};
