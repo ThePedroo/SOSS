@@ -17,8 +17,8 @@ all:
 	$(CC) $(LDFLAGS) -shared build/floating_feature.o build/cpp_strings.o build/sem_floating_feature.o -o libfloatingfeature.so -Lbuild -lexpat_stub
 
 test: all
-	$(CC) $(CFLAGS) -fPIE -pie tests/testsuite.c -L. -lfloatingfeature -o build/test
-	$(CC) $(TEST_CFLAGS) -fPIE -pie tests/testsuite.c -L. -lfloatingfeature -o build/test_noload
+	$(CC) $(CFLAGS) -fPIE -pie tests/testsuite.c cpp_strings.c -L. -lfloatingfeature -o build/test
+	$(CC) $(TEST_CFLAGS) -fPIE -pie tests/testsuite.c cpp_strings.c -L. -lfloatingfeature -o build/test_noload
 	@$(ADB) shell mkdir -p $(TEST_DIR) >/dev/null
 	@$(ADB) push libfloatingfeature.so build/test build/test_noload $(TEST_DIR)/ >/dev/null
 	@$(ADB) shell "cd $(TEST_DIR) && LD_LIBRARY_PATH=/system/lib64:. ./test && rm -f floating_feature.xml && LD_LIBRARY_PATH=/system/lib64:. ./test_noload"

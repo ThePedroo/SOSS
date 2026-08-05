@@ -6,6 +6,9 @@
 !libfloatingfeatures/
 !libfloatingfeatures/**
 
+!libsecnativefeature/
+!libsecnativefeature/**
+
 !.gitignore
 !LICENSE
 !README.md

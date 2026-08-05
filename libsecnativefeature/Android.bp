@@ -1,0 +1,19 @@
+cc_library_shared {
+    name: "libsecnativefeature",
+    srcs: ["secnativefeature.c", "sec_native_feature.c"],
+    cflags: [
+        "-std=c99",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic",
+    ],
+    shared_libs: ["libexpat", "libz"],
+    version_script: "secnativefeature.map",
+    vendor: true
+}
+
+cc_library_shared {
+    name: "libexpat",
+    srcs: ["stub/expat_stub.c"],
+    vendor: true
+}

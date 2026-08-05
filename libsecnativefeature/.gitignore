@@ -1,0 +1,23 @@
+*
+
+!stub/
+!stub/**
+
+!tests/
+!tests/**
+
+# INFO: Blobs omitted to reduce repo size. libsecnativefeature.so is
+#         the pristine original binary used by the differential test.
+# !blobs/
+# !blobs/**
+
+!.gitignore
+!Android.bp
+!secnativefeature.c
+!sec_native_feature.c
+!secnativefeature.h
+!secnativefeature.map
+!Makefile
+!README.md
+!expat.h
+!decode_tables.h
