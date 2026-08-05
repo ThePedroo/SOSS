@@ -6,6 +6,12 @@
 !tests/
 !tests/**
 
+# INFO: Blobs omitted to reduce repo size. gatekeeper_old.so is the
+#         binary of GK of the first A53 firmware, and the other, of
+#         the latest.
+# !blobs/
+# !blobs/**
+
 !.gitignore
 !Android.bp
 !gatekeeper.c
