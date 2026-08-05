@@ -3,6 +3,9 @@
 !stub/
 !stub/**
 
+!tests/
+!tests/**
+
 !.gitignore
 !Android.bp
 !gatekeeper.c
